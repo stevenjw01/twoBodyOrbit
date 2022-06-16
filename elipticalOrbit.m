@@ -6,8 +6,8 @@ clc;
 rE = 6378; % Radius of Earth (km)
 % Initial Conditions
 mu = 3.986e5;
-r0 = [-6045,-3490,2500];
-v0 = [-3.457,6.618,2.533];
+r0 = [15000,0,0];
+v0 = [0,0,sqrt(mu/r0(1))];
 %v0 = [0,0,sqrt(mu/r0(1))];
 % --------- END INITAL CONDITIONS --------
 
@@ -78,11 +78,11 @@ plot3(sol(:,1),sol(:,2),sol(:,3),'-b','LineWidth',2) % Plot in 3d
 function sdot = diffEq(t,s,mu)
 
 % r is first three elements, v is last three
-r = s(1:3);
-v = s(4:6);
+rDQ = s(1:3);
+vDQ = s(4:6);
 
-sdot(1:3,1) = v; %First three elements are velocity
-sdot(4:6,1) = (-mu*r)/(norm(r))^3; % Actual two body EOM
+sdot(1:3,1) = vDQ; %First three elements are velocity
+sdot(4:6,1) = (-mu*rDQ)/(norm(rDQ))^3; % Actual two body EOM
 
 
 end
